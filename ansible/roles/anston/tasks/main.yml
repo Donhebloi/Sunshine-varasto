@@ -1,0 +1,41 @@
+- group:
+    name: "sudoless"
+    state: present
+
+- user: 
+   name: "anston"
+   state: present
+   groups: [ "sudoless", "sudo", "adm" ]
+
+- authorized_key:
+    user: "anston"
+    key: "{{ lookup ('file', 'id_ed25519.pub') }}"
+
+- copy:
+    dest: "/etc/sudoers.d/sudoless"
+    content: "%sudoless ALL = (ALL) NOPASSWD: ALL\n"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- apt: 
+    name: 
+      - htop
+      - cowsay
+    state: present
+
+- copy:
+    dest: "/tmp/teksti.txt"
+    content: |
+      Tässä on yksi rivi tekstiä
+      Tässä on toinen rivi tekstiä
+      Tässä on vielä kolmas rivi tekstiä
+    owner: "anston"
+    group: "anston"
+    mode: "0640"
+    
+- lineinfile:
+    path: /etc/motd
+    line: Jotain tekstintynkää
+    create: yes
+    

@@ -1,0 +1,11 @@
+- apt:
+    name: nginx
+    state: present
+
+- copy:
+    dest: "/etc/nginx/sites-available/default"
+    src: "default"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: restart nginx
