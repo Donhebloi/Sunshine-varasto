@@ -1,3 +1,7 @@
 - copy:
    dest: /tmp/hello-ansible
    content: "Hei maailma\n"
+
+- name: Hello message
+  debug:
+    msg: "Morjensta, morjensta"
